@@ -2,24 +2,24 @@ package io.herald.MySpringWeb.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
+
 
 @Controller  //handles HTTP requests: GET, POST, etc.
 public class MappingClass {
 
 
-
     @GetMapping("/")   //url pattern for mappping
     public String openFirstPage(){
-        return "FirstPage.html";
+        return "FirstPage";
     }
 
-    @GetMapping("/nextPage")
+    //url in this point was fixed
+    @GetMapping("/NextPage")
     public String openNextPage(){
-        return "NextPage.html";
+        return "NextPage";
     }
     @GetMapping("/login")
     public String login(){
-        return "login.html";
+        return "login";
     }
 }
