@@ -40,7 +40,6 @@ public class MappingClass {
         }
         return "login";
 
-
     }
 
 
