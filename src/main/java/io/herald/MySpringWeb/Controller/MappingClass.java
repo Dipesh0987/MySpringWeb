@@ -35,10 +35,10 @@ public class MappingClass {
         // in controller
 
         if(username.equals("admin") && password.equals("admin")){
-            return "HomePage";
-        }else{
-            return "login";
+            return "Home.html";
         }
+        return "login";
+
 
     }
 
