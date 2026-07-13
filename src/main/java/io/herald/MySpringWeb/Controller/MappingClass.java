@@ -23,6 +23,7 @@ public class MappingClass {
     @GetMapping("/login")
     public String login(){
         return "login";
+
     }
 
     @PostMapping("/login")
