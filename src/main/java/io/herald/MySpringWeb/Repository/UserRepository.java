@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository <UserTable,Integer> {
     //custom query
     //join queries
 
+    boolean existsByUsernameAndPassword(String username, String pwd);
+
 }
