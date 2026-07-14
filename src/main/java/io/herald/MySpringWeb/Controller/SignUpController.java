@@ -5,6 +5,7 @@ import io.herald.MySpringWeb.Repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class SignUpController {
     }
 
     @PostMapping("/signup")
-    public String postSignup(HttpServletRequest request){
+    public String postSignup(HttpServletRequest request, Model m){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -47,6 +48,12 @@ public class SignUpController {
         System.out.println(password);
 
 
+
+        //model ko m vnane object le message liyera gako -> login.html lai
+        //message lai attribute vaninxa model ko vasa ma
+
+        // m.attribute(msg title, message)
+        m.addAttribute("SignupSuccess", "You have successfully signed up");
         return "login.html";
     }
 }
