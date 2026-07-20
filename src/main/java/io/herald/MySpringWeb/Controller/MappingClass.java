@@ -1,12 +1,16 @@
 package io.herald.MySpringWeb.Controller;
 
+import io.herald.MySpringWeb.Model.UserTable;
 import io.herald.MySpringWeb.Repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 
 @Controller  //handles HTTP requests: GET, POST, etc.
@@ -33,7 +37,7 @@ public class MappingClass {
     }
 
     @PostMapping("/login")
-    public String loginPost(HttpServletRequest request){
+    public String loginPost(HttpServletRequest request, Model m){
         request.getParameter( "username");
         request.getParameter( "password");
         String username = request.getParameter( "username") ;
@@ -43,6 +47,8 @@ public class MappingClass {
         String hashPassword = DigestUtils.md5DigestAsHex(password.getBytes());
 
         if(uRepo.existsByUsernameAndPassword(username, hashPassword)){
+            List <UserTable> totalUsers = uRepo.findAll();
+            m.addAttribute("totalUsers", totalUsers);
             return "Home.html";
         }
         return "login";

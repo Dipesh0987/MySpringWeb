@@ -6,6 +6,23 @@
 </head>
 
 <body>
+    <div th:insert="nav.html"></div>
     <h1>Welcome to home page</h1>
+<hr>
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Username</td>
+        <td>Edit this User</td>
+        <td>Delete this User</td>
+    </tr>
+        <tr th:each="user:${totalUsers}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUsername()}"></td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+</table>
+<hr>
 </body>
 </html>
