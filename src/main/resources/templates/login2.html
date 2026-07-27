@@ -32,20 +32,19 @@
             </div>
             <div class="card-body">
                 <span th:text="${SignupSuccess}" style="color: #0a7d0a"></span>
-                <span th:text="${message}" style="color: #0a8d0b"></span>
                 <form method="POST" action="login">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="username" name="username">
+                        <input type="text" class="form-control" placeholder="username">
 
                     </div>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="password" name="password">
+                        <input type="password" class="form-control" placeholder="password">
                     </div>
                     <div class="row align-items-center remember">
                         <input type="checkbox">Remember Me
