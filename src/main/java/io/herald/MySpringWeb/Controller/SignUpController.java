@@ -4,17 +4,22 @@ import io.herald.MySpringWeb.Model.UserTable;
 import io.herald.MySpringWeb.Repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.nio.charset.StandardCharsets;
 
 
 @Controller
 public class SignUpController {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
 
     @Autowired
     //autowired annotation helps in dependency injection
@@ -34,6 +39,7 @@ public class SignUpController {
     public String postSignup(HttpServletRequest request, Model m){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String email = request.getParameter("email");
 
         //MDS hashing - crackable
         String hashPassword = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -44,12 +50,19 @@ public class SignUpController {
 
 
         uRepo.save(uc);
+        //mail sender
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Signup Successful");
+        message.setText("Welcome "+username+"!");
+//        mailSender.send(message);
+
         System.out.println(username);
         System.out.println(password);
 
 
 
-        //model ko m vnane object le message liyera gako -> login.html lai
+        //model ko m vanne object le message liyera gako -> login.html lai
         //message lai attribute vaninxa model ko vasa ma
 
         // m.attribute(msg title, message)
