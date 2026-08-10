@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -18,7 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SignUpController {
 
     @Autowired
-    private JavaMailSender mailSender;
+    private PasswordEncoder passwordEncoder;
+
+
+//    @Autowired
+//    private JavaMailSender mailSender;
 
 
     @Autowired
@@ -42,14 +47,15 @@ public class SignUpController {
         String email = request.getParameter("email");
 
         //MDS hashing - crackable
-        String hashPassword = DigestUtils.md5DigestAsHex(password.getBytes());
+        // String hashPassword = DigestUtils.md5DigestAsHex(password.getBytes())
+        String hashPassword = passwordEncoder.encode(password);
 
-        UserTable uc =  new UserTable();
-        uc .setUsername(username);
-        uc.setPassword(hashPassword);
+        UserTable user =  new UserTable();
+        user .setUsername(username);
+        user.setPassword(hashPassword);
 
 
-        uRepo.save(uc);
+        uRepo.save(user);
         //mail sender
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);

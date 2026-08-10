@@ -5,6 +5,7 @@ import io.herald.MySpringWeb.Repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -17,6 +18,8 @@ import java.util.List;
 @Controller  //handles HTTP requests: GET, POST, etc.
 public class MappingClass {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository uRepo;
@@ -47,16 +50,28 @@ public class MappingClass {
         // in controller
         String hashPassword = DigestUtils.md5DigestAsHex(password.getBytes());
 
-        if(uRepo.existsByUsernameAndPassword(username, hashPassword)){
-            List <UserTable> totalUsers = uRepo.findAll();
+//        if(uRepo.existsByUsernameAndPassword(username, hashPassword))4
 
-            m.addAttribute("totalUsers", totalUsers);
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            return "Home.html";
+        try {
+
+            UserTable user = uRepo.findByUsername(username);
+            if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+                List<UserTable> totalUsers = uRepo.findAll();
+
+                m.addAttribute("totalUsers", totalUsers);
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                return "Home.html";
+            }
+
+
+        }catch (Exception e){
+            m.addAttribute("error","Invalid username or password");
+
+            return "login";
         }
+        m.addAttribute("message", "Invalid username or password");
         return "login";
-
     }
     @GetMapping("/home")
     public String homeGet(Model m){
