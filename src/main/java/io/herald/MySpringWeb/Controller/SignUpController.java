@@ -46,6 +46,12 @@ public class SignUpController {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
 
+        if(uRepo.findByUsername(username) != null){
+            m.addAttribute("message", "Username already exists");
+            return "signup";
+        }
+
+
         //MDS hashing - crackable
         // String hashPassword = DigestUtils.md5DigestAsHex(password.getBytes())
         String hashPassword = passwordEncoder.encode(password);

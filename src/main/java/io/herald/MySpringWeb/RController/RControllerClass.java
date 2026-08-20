@@ -43,8 +43,6 @@ public class RControllerClass {
     public UserTable getOne(@PathVariable int id) {
         UserTable u = userRepo.findById(id).get();
         return u;
-
-
     }
     @GetMapping("/getId/{id}")
     public ResponseEntity<?> getId(@PathVariable int id) {
