@@ -21,7 +21,7 @@ public class UserController {
     public String deleteUser(@RequestParam("id") int id, Model m) {
         userRepository.deleteById(id);
         m.addAttribute("totalUsers", userRepository.findAll());
-        return "home.html";
+        return "Home.html";
     }
     @PostMapping("/editUser")
     public String editUser(@RequestParam("id") int id, Model m) {
@@ -33,7 +33,7 @@ public class UserController {
             return "edit";
         }
         m.addAttribute("totalUsers", userRepository.findAll());
-        return "home.html";
+        return "Home.html";
 
 
     }
